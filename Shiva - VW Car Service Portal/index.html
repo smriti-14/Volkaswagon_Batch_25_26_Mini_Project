@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volkswagen Service Portal</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+  </head>
+  <body>
+    <div id="login-screen" class="login-screen">
+      <div class="login-container">
+        <div class="login-shell">
+          <div class="login-panel">
+            <div class="login-header">
+              <div class="auth-brand">
+                <img src="logo.png" alt="Volkswagen Systems" class="logo-img" />
+                <span class="logo-text">VOLKSWAGEN <span>SYSTEMS</span></span>
+              </div>
+              <h2 class="login-panel-title">Service Portal Access</h2>
+            </div>
+            <div class="login-tabs" role="tablist" aria-label="Authentication">
+              <button
+                type="button"
+                class="login-tab active"
+                data-auth-tab="login"
+                role="tab"
+                aria-selected="true"
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                class="login-tab"
+                data-auth-tab="register"
+                role="tab"
+                aria-selected="false"
+              >
+                Register
+              </button>
+            </div>
+            <p class="auth-note">
+              Demo login: <span>demo</span> / <span>demo1234</span> (preview
+              only).
+            </p>
+            <div
+              id="auth-error"
+              class="auth-error"
+              role="alert"
+              aria-live="polite"
+            ></div>
+            <form id="login-form" class="login-form" data-auth-panel="login">
+              <div class="form-group">
+                <label for="login-identifier">Username or Email</label>
+                <input
+                  type="text"
+                  id="login-identifier"
+                  name="identifier"
+                  placeholder="Enter username or email"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  placeholder="Enter password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <form
+              id="register-form"
+              class="login-form is-hidden"
+              data-auth-panel="register"
+            >
+              <div class="form-group">
+                <label for="register-username">Username</label>
+                <input
+                  type="text"
+                  id="register-username"
+                  name="username"
+                  placeholder="Choose a username"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-email">Email</label>
+                <input
+                  type="email"
+                  id="register-email"
+                  name="email"
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-password">Password</label>
+                <input
+                  type="password"
+                  id="register-password"
+                  name="password"
+                  placeholder="Create a password"
+                  minlength="8"
+                  autocomplete="new-password"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-confirm">Confirm Password</label>
+                <input
+                  type="password"
+                  id="register-confirm"
+                  name="confirm"
+                  placeholder="Re-enter password"
+                  minlength="8"
+                  autocomplete="new-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Create Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main-app" class="main-app">
+      <header>
+        <a
+          class="logo logo-link"
+          href="#"
+          data-view="book"
+          aria-label="Volkswagen Systems home"
+        >
+          <img src="logo.png" alt="Volkswagen Systems" class="logo-img" />
+          <span class="logo-text">VOLKSWAGEN <span>SYSTEMS</span></span>
+        </a>
+        <nav>
+          <button
+            class="hamburger"
+            id="nav-toggle"
+            type="button"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul class="nav-menu">
+            <li>
+              <button id="nav-book" class="active" data-view="book" type="button">
+                Service Booking
+              </button>
+            </li>
+            <li>
+              <button id="nav-garage" data-view="garage" type="button">
+                My Portal
+              </button>
+            </li>
+            <li>
+              <button id="nav-logout" class="logout-btn" type="button">
+                Logout
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <section id="book-section" class="section active">
+          <h1 tabindex="-1">Technical Service Scheduler</h1>
+          <div class="card">
+            <form id="mainForm">
+              <input type="hidden" id="edit-id" />
+
+              <h2>Vehicle Identification</h2>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Vehicle Model</label>
+                  <select
+                    id="model-select"
+                    required
+                  >
+                    <option value="" disabled selected>Select Model</option>
+                    <option value="Virtus">Virtus</option>
+                    <option value="Taigun">Taigun</option>
+                    <option value="Polo">Polo</option>
+                    <option value="Vento">Vento</option>
+                    <option value="Jetta">Jetta</option>
+                    <option value="Other">Other Model</option>
+                  </select>
+                  <div id="other-input-container" class="is-hidden">
+                    <input
+                      type="text"
+                      id="model-other"
+                      placeholder="Specify Model (e.g. Passat, Arteon)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>VIN / Registration Number</label>
+                  <input
+                    type="text"
+                    id="reg-num"
+                    placeholder="Registration Number"
+                    required
+                  />
+                </div>
+              </div>
+
+              <h2>Technical Scope</h2>
+              <div class="category-nav">
+                <button
+                  type="button"
+                  class="cat-btn"
+                  id="btn-maint"
+                  data-cat="maint"
+                >
+                  <h4>Periodic Maintenance</h4>
+                </button>
+                <button
+                  type="button"
+                  class="cat-btn"
+                  id="btn-repair"
+                  data-cat="repair"
+                >
+                  <h4>Mechanical & Electrical</h4>
+                </button>
+                <button
+                  type="button"
+                  class="cat-btn"
+                  id="btn-body"
+                  data-cat="body"
+                >
+                  <h4>Body & Detailing</h4>
+                </button>
+              </div>
+
+              <div id="panel-maint" class="service-panel">
+                <span class="sub-group-title">Interval Services</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="15k KM Service"
+                    />
+                    15,000 KM Periodic Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="30k KM Service"
+                    />
+                    30,000 KM Periodic Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="45k KM Service"
+                    />
+                    45,000 KM Periodic Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="60k KM Service"
+                    />
+                    60,000 KM Periodic Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="90k KM Service"
+                    />
+                    90,000 KM Periodic Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="120k KM Service"
+                    />
+                    120,000 KM Major Service</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Annual Service" />
+                    Annual Comprehensive Service</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Pre-Purchase Inspection"
+                    />
+                    Pre-Purchase Inspection</label
+                  >
+                </div>
+                <span class="sub-group-title">Fluids & Filtration</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Synthetic Oil Change"
+                    />
+                    Synthetic Engine Oil Change</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Brake Fluid Flush"
+                    />
+                    Brake Fluid Flush & Replace</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Coolant Top-up"
+                    />
+                    Coolant System G12/G13 Refill</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Spark Plug Set"
+                    />
+                    Spark Plug Set Replacement</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Filters Replace"
+                    />
+                    Air/Fuel/Cabin Filter Set</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Transmission Fluid"
+                    />
+                    Transmission Fluid & Filter Service</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Power Steering" />
+                    Power Steering Fluid Service</label
+                  >
+                </div>
+                <span class="sub-group-title">Safety & Compliance</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="General Inspection" />
+                    30-Point Safety Inspection</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Emission Test" />
+                    Emission & PUC Check</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Recall Campaign" />
+                    Recall / Service Campaign Action</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Software Update" />
+                    ECU Software Update & Coding</label
+                  >
+                </div>
+              </div>
+
+              <div id="panel-repair" class="service-panel">
+                <span class="sub-group-title">Transmission & Engine</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="DSG Calibration"
+                    />
+                    DSG Gearbox Calibration</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Clutch Kit" />
+                    Clutch & Flywheel Assembly</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Timing Belt Kit"
+                    />
+                    Timing Belt & Tensioner Kit</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Turbo Diagnostic"
+                    />
+                    Turbocharger Inspection</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Engine Mounts" />
+                    Engine/Gearbox Mount Replacement</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Fuel System" />
+                    Fuel System Cleaning & Injectors</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Cooling System" />
+                    Cooling System Diagnosis & Repair</label
+                  >
+                </div>
+                <span class="sub-group-title">Braking & Suspension</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Disc Rotors" />
+                    Brake Disc Rotors Replacement</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Shock Absorbers"
+                    />
+                    Front/Rear Shock Absorbers</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Suspension Bushes"
+                    />
+                    Suspension Bushing & Link Rods</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Steering Rack" />
+                    Steering Rack Repair/Adjustment</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Wheel Alignment" />
+                    Wheel Alignment & Balancing</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Tyres" />
+                    Tyre Replacement & Rotation</label
+                  >
+                </div>
+                <span class="sub-group-title">Electrical & HVAC</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="OBD Scanning" />
+                    Full VAG-COM/OBD Diagnostic</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="AC Overhaul" />
+                    AC Evaporator & Compressor Service</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Battery VARTA" />
+                    Battery Health Check (VARTA/Exide)</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Alternator" />
+                    Alternator & Starter Motor Repair</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Infotainment" />
+                    Infotainment & Bluetooth Troubleshooting</label
+                  >
+                </div>
+              </div>
+
+              <div id="panel-body" class="service-panel">
+                <span class="sub-group-title">Cosmetic & Protection</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Panel Painting"
+                    />
+                    Denting & Panel Painting</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Ceramic Coating"
+                    />
+                    Ceramic Pro 9H Coating</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Underbody Wax" />
+                    Anti-Corrosion Underbody Wax</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Windshield Replace"
+                    />
+                    Front Windshield Replacement</label
+                  >
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Interior Detail"
+                    />
+                    Deep Interior Valet & Sanitization</label
+                  >
+                </div>
+                <span class="sub-group-title">Glass, Lighting & Trim</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input
+                      type="checkbox"
+                      name="task"
+                      value="Headlamp Restore"
+                    />
+                    Headlamp Restoration & Polishing</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Wiper System" />
+                    Wiper System & Washer Jets</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Exterior Trim" />
+                    Exterior Trim & Cladding Repair</label
+                  >
+                </div>
+                <span class="sub-group-title">Interior & Accessories</span>
+                <div class="options-grid">
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Seat Upholstery" />
+                    Seat Upholstery & Stitching</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Cabin Electronics" />
+                    Cabin Electronics & Switchgear</label
+                  >
+                  <label class="opt-item"
+                    ><input type="checkbox" name="task" value="Accessory Fitment" />
+                    OEM Accessory Fitment</label
+                  >
+                </div>
+              </div>
+
+              <h2>Logistics & Remarks</h2>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Appointment Date</label>
+                  <input type="date" id="date-pick" required />
+                </div>
+                <div class="form-group">
+                  <label>Time Slot</label>
+                  <select id="time-pick" required>
+                    <option value="" disabled selected>Select Slot</option>
+                    <option value="08:30 AM">08:30 AM (Early Drop)</option>
+                    <option value="10:30 AM">10:30 AM</option>
+                    <option value="01:30 PM">01:30 PM</option>
+                    <option value="03:30 PM">03:30 PM</option>
+                  </select>
+                </div>
+                <div class="form-group full-width">
+                  <label>Technical Notes & Customer Remarks</label>
+                  <textarea
+                    id="notes"
+                    rows="5"
+                    placeholder="Please describe any specific symptoms (e.g. rattling at 2000 RPM, cold start issues)..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="btn-row">
+                <button type="submit" class="btn btn-primary" id="submit-btn">
+                  Submit Booking
+                </button>
+                <button
+                  type="button"
+                  id="cancel-edit"
+                  class="btn btn-outline is-hidden"
+                >
+                  Discard Modification
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section id="garage-section" class="section">
+          <h1 tabindex="-1">Vehicle Service Portal</h1>
+          <div class="portal-layout">
+            <aside class="portal-sidebar">
+              <div class="card portal-card">
+                <h2 class="portal-title">Account Overview</h2>
+                <div class="portal-user">
+                  <p class="portal-label">Username</p>
+                  <p id="user-name" class="portal-value">—</p>
+                  <p class="portal-label">Email</p>
+                  <p id="user-email" class="portal-value">—</p>
+                </div>
+                <p id="user-mode" class="portal-note is-hidden">
+                  Demo mode (local data only)
+                </p>
+              </div>
+            </aside>
+            <div class="portal-main">
+              <div id="booking-list"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <h3>Site Map</h3>
+            <button type="button" class="footer-link" data-view="book">
+              Service Booking
+            </button>
+            <button type="button" class="footer-link" data-view="garage">
+              My Portal
+            </button>
+          </div>
+          <div>
+            <h3>Operations</h3>
+            <p>Technical support hours: Mon-Sat, 08:00-18:00</p>
+            <p>Workshop intake: VW Authorized Service</p>
+          </div>
+          <div>
+            <h3>Support</h3>
+            <p>Service desk: support@vw-systems.local</p>
+            <p>Emergency line: +91 00000 00000</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
